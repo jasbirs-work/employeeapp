@@ -1,12 +1,18 @@
 /* eslint-disable no-undef */
 import React, {useState} from 'react';
-import {StyleSheet, View, Modal} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Modal,
+  Alert,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 //import ImagePicker from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import Toast from 'react-native-root-toast';
-const CreateEmployee = () => {
+const CreateEmployee = ({navigation}) => {
   const [Name, setName] = useState('');
   const [Email, setEmail] = useState('');
   const [Phone, setPhone] = useState('');
@@ -91,7 +97,9 @@ const CreateEmployee = () => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        Alert.alert(`${res.name} is saved successfully`);
         reset();
+        navigation.navigate('Home');
         Toast.show('Data Uploaded successfully !!', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
@@ -114,92 +122,94 @@ const CreateEmployee = () => {
 
   return (
     <View>
-      <TextInput
-        label="Name"
-        style={style.inputStyle}
-        value={Name}
-        mode="outlined"
-        theme={theme}
-        onChangeText={text => setName(text)}
-      />
-      <TextInput
-        label="Email"
-        style={style.inputStyle}
-        value={Email}
-        mode="outlined"
-        theme={theme}
-        onChangeText={text => setEmail(text)}
-      />
-      <TextInput
-        label="Phone"
-        style={style.inputStyle}
-        value={Phone}
-        keyboardType="number-pad"
-        mode="outlined"
-        theme={theme}
-        onChangeText={text => setPhone(text)}
-      />
-      <TextInput
-        label="Salary"
-        style={style.inputStyle}
-        value={Salary}
-        mode="outlined"
-        theme={theme}
-        onChangeText={text => setSalary(text)}
-      />
-      <TextInput
-        label="Position"
-        style={style.inputStyle}
-        value={Position}
-        mode="outlined"
-        theme={theme}
-        onChangeText={text => setPosition(text)}
-      />
+      <KeyboardAvoidingView>
+        <TextInput
+          label="Name"
+          style={style.inputStyle}
+          value={Name}
+          mode="outlined"
+          theme={theme}
+          onChangeText={text => setName(text)}
+        />
+        <TextInput
+          label="Email"
+          style={style.inputStyle}
+          value={Email}
+          mode="outlined"
+          theme={theme}
+          onChangeText={text => setEmail(text)}
+        />
+        <TextInput
+          label="Phone"
+          style={style.inputStyle}
+          value={Phone}
+          keyboardType="number-pad"
+          mode="outlined"
+          theme={theme}
+          onChangeText={text => setPhone(text)}
+        />
+        <TextInput
+          label="Salary"
+          style={style.inputStyle}
+          value={Salary}
+          mode="outlined"
+          theme={theme}
+          onChangeText={text => setSalary(text)}
+        />
+        <TextInput
+          label="Position"
+          style={style.inputStyle}
+          value={Position}
+          mode="outlined"
+          theme={theme}
+          onChangeText={text => setPosition(text)}
+        />
 
-      <Button
-        icon={Picture == '' ? 'upload' : 'check'}
-        mode="contained"
-        style={style.buttonStyle}
-        theme={theme}
-        onPress={() => setModal(true)}>
-        Upload Image
-      </Button>
+        <Button
+          icon={Picture == '' ? 'upload' : 'check'}
+          mode="contained"
+          style={style.buttonStyle}
+          theme={theme}
+          onPress={() => setModal(true)}>
+          Upload Image
+        </Button>
 
-      <Button
-        icon="content-save"
-        style={style.buttonStyle}
-        mode="contained"
-        theme={theme}
-        onPress={onsubmitData}>
-        Save
-      </Button>
-      <Modal
-        animationType="slide"
-        onRequestClose={() => {
-          setModal(false);
-        }}
-        transparent={true}
-        visible={modal}>
-        <View style={style.modalView}>
-          <View style={style.modalButtonview}>
-            <Button
-              icon="camera"
-              mode="contained"
-              theme={theme}
-              onPress={launchCamera}>
-              Camera
-            </Button>
-            <Button
-              icon="image-area"
-              mode="contained"
-              theme={theme}
-              onPress={launchImageLibrary}>
-              Gallery
-            </Button>
+        <Button
+          icon="content-save"
+          style={style.buttonStyle}
+          mode="contained"
+          theme={theme}
+          onPress={onsubmitData}>
+          Save
+        </Button>
+        <Modal
+          animationType="slide"
+          onRequestClose={() => {
+            setModal(false);
+          }}
+          transparent={true}
+          visible={modal}>
+          <View style={style.modalView}>
+            <View style={style.modalButtonview}>
+              <Button
+                icon="camera"
+                mode="contained"
+                theme={theme}
+                onPress={launchCamera}>
+                Camera
+              </Button>
+              <Button
+                icon="image-area"
+                mode="contained"
+                theme={theme}
+                onPress={launchImageLibrary}>
+                Gallery
+              </Button>
+            </View>
+            <Button onPress={() => setModal(false)}>Cancel</Button>
           </View>
-          <Button onPress={() => setModal(false)}>Cancel</Button>
-        </View>
-      </Modal>
+        </Modal>
+      </KeyboardAvoidingView>
     </View>
   );
 };
