@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, {useState} from 'react';
 import {StyleSheet, View, Modal} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
@@ -73,7 +74,7 @@ const CreateEmployee = () => {
     setPosition('');
   };
   onsubmitData = () => {
-    fetch('http://3cfeab37.ngrok.io/send-data', {
+    fetch('http://a89b4aa3.ngrok.io/send-data', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
